@@ -8,7 +8,7 @@ export default class Dashboard extends Component {
   }
   render() {
     return (
-      <div class="Dashboard">
+      <div className="Dashboard">
         <h1 style={{ margin: "25%" }}>{this.props.cont}</h1>
       </div>
     );

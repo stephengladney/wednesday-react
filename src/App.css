@@ -33,6 +33,14 @@
     transform: rotate(360deg);
   }
 }
+.Navbar {
+  background-color: #111111;
+  color: #eeeeee;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
 
 .Dashboard {
   flex-grow: 1;
@@ -43,4 +51,8 @@
 #Wednesday {
   /* mask-image: linear-gradient(to left, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0) 85%); */
   max-height: 100vh;
+}
+
+.Link {
+  color: #eeeeee;
 }

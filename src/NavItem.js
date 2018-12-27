@@ -1,15 +1,16 @@
 import React from "react";
 import "./NavItem.css";
 
-const NavItem = ({ item, icon, navigateTo, navigatedTo }) => {
+const NavItem = ({ item, icon, navigationCurrent, navigateTo }) => {
   return (
     <div
       style={{
-        backgroundColor: navigatedTo === item ? "#555555" : "#111111"
+        backgroundColor: navigationCurrent === item ? "#555555" : "#111111"
       }}
-      class="navItem"
+      className="navItem"
+      onClick={() => navigateTo(item)}
     >
-      <i class={icon + " icon huge"} onClick={() => navigateTo(item)} />
+      <i className={icon + " icon huge"} />
     </div>
   );
 };
