@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import "./App.css";
-// import Navbar from "./Navbar";
 import Dashboard from "./Dashboard";
-import Wednesday from "./Wednesday";
-import NavItem from "./NavItem";
-import Spotify from "./Spotify";
-import Weather from "./Weather";
+import Wednesday from "./components/App/Wednesday/Wednesday";
+import NavItem from "./components/App/NavItem/NavItem";
+import Spotify from "./components/App/Spotify/Spotify";
+import Weather from "./components/App/Weather/Weather";
 
 class App extends Component {
   constructor(props) {
