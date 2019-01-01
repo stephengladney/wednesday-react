@@ -8,6 +8,7 @@ const NavItem = ({ item, icon, navigationCurrent, navigateTo }) => {
         <img
           src="images/model_s.svg"
           style={{ height: "112px", width: "112px" }}
+          alt="model s"
         />
       );
       break;
@@ -16,6 +17,7 @@ const NavItem = ({ item, icon, navigationCurrent, navigateTo }) => {
         <img
           src="images/weather_icons/cloud_sun.png"
           style={{ height: "65px", width: "65px" }}
+          alt="weather"
         />
       );
       break;

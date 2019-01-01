@@ -36,6 +36,7 @@ const Weather = ({
           <img
             className="weatherIcon"
             src={`/images/weather_icons/${weather_icon}`}
+            alt="weather icon"
           />{" "}
           {/* <div className="weatherDescription">
             {weather_description} 

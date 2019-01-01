@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import "./App.css";
 import Dashboard from "./Dashboard";
 import Wednesday from "./components/App/Wednesday/Wednesday";
-import NavItem from "./components/App/NavItem/NavItem";
+import Navbar from "./components/App/Navbar/Navbar";
 import Spotify from "./components/App/Spotify/Spotify";
 import Weather from "./components/App/Weather/Weather";
 import Vehicle from "./components/App/Vehicle/Vehicle";
@@ -14,7 +14,6 @@ import {
   weatherIcon,
   isItDayOrNight
 } from "./wednesday";
-import axios from "axios";
 
 class App extends Component {
   constructor(props) {
@@ -87,20 +86,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <div className="Navbar">
-            <Link to={"/home"} className="Link">
-              <NavItem item="home" icon="home" {...passNavigationOn} />
-            </Link>
-            <Link to={"/vehicle"} className="Link">
-              <NavItem item="vehicle" icon="model_s" {...passNavigationOn} />
-            </Link>
-            <Link to={"/weather"} className="Link">
-              <NavItem item="weather" icon="weather" {...passNavigationOn} />
-            </Link>
-            <Link to={"/spotify"} className="Link">
-              <NavItem item="spotify" icon="spotify" {...passNavigationOn} />
-            </Link>
-          </div>
+          <Navbar passNavigationOn={passNavigationOn} />
           <Switch>
             <Route exact path="/" render={() => <Dashboard cont="home" />} />
             <Route path="/home" render={() => <Dashboard cont="home" />} />
