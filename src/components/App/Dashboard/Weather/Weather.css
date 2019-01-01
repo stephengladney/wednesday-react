@@ -9,6 +9,8 @@ div.weatherTemperature {
   line-height: 128px;
   font-size: 48px;
   font-family: "Michroma", sans-serif;
+  vertical-align: middle;
+  margin: 0px 80px 0px 0px;
 }
 
 img.weatherIcon {
@@ -16,8 +18,27 @@ img.weatherIcon {
   width: 128px;
   vertical-align: middle;
   line-height: 128px;
-  margin: 0px 10px 0px 0px;
-  border-style: solid;
-  border-width: 1px;
-  border-color: red;
+  margin: 0px 20px 0px 0px;
+}
+
+table.weatherSummary {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+table.weatherSummary td {
+  padding-right: 40px;
+  font-size: 20px;
+}
+
+.helper {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+span.weatherSummaryDetail {
+  font-weight: bold;
+  color: #888888;
 }

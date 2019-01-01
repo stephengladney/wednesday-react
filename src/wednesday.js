@@ -1,7 +1,7 @@
 module.exports = {
   todaysDate: todaysDate,
   myLocation: myLocation,
-  weather: weather,
+  getWeatherByLocation: getWeatherByLocation,
   weatherIcon: weatherIcon,
   isItDayOrNight: isItDayOrNight
 };
@@ -87,7 +87,7 @@ function myLocation() {
   );
 }
 
-function weather(latitude, longitude, units, apiKey) {
+function getWeatherByLocation(latitude, longitude, units, apiKey) {
   return axios.get(
     `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=${units}&appid=${apiKey}`
   );

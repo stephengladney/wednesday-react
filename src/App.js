@@ -8,7 +8,7 @@ import Wednesday from "./components/App/Wednesday/Wednesday";
 import {
   todaysDate,
   myLocation,
-  weather,
+  getWeatherByLocation,
   weatherIcon,
   isItDayOrNight
 } from "./wednesday";
@@ -25,6 +25,13 @@ class App extends Component {
       weather_description: "Weather loading...",
       weather_units: "imperial",
       weather_temperature: 0,
+      weather_high: 0,
+      weather_low: 0,
+      weather_humidity: 0,
+      weather_wind: 0,
+      weather_sunrise: 0,
+      weather_sunset: 0,
+      weather_clouds: 0,
       weather_city: ""
     };
     this.navigateTo = this.navigateTo.bind(this);
@@ -46,7 +53,7 @@ class App extends Component {
       .catch(err => alert(`Error getting location: ${err}`))
       .then(coords => {
         this.setState(coords);
-        return weather(
+        return getWeatherByLocation(
           Number(coords.latitude).toFixed(4),
           Number(coords.longitude).toFixed(4),
           this.state.weather_units,
@@ -61,7 +68,14 @@ class App extends Component {
           ),
           weather_description: response.data.weather[0].description,
           weather_temperature: Number(response.data.main.temp).toFixed(),
-          weather_city: response.data.name
+          weather_city: response.data.name,
+          weather_high: Number(response.data.main.temp_max).toFixed(),
+          weather_low: Number(response.data.main.temp_min).toFixed(),
+          weather_humidity: response.data.main.humidity,
+          weather_wind: response.data.wind.speed,
+          weather_sunrise: response.data.sys.sunrise,
+          weather_sunset: response.data.sys.sunset,
+          weather_clouds: response.data.clouds.all
         });
       })
       .catch(err => {
@@ -89,7 +103,14 @@ class App extends Component {
       weather_description: this.state.weather_description,
       weather_units: this.state.weather_units,
       weather_temperature: this.state.weather_temperature,
-      weather_city: this.state.weather_city
+      weather_city: this.state.weather_city,
+      weather_high: this.state.weather_high,
+      weather_low: this.state.weather_low,
+      weather_humidity: this.state.weather_humidity,
+      weather_wind: this.state.weather_wind,
+      weather_sunrise: this.state.weather_sunrise,
+      weather_sunset: this.state.weather_sunset,
+      weather_clouds: this.state.weather_clouds
     };
 
     return (
