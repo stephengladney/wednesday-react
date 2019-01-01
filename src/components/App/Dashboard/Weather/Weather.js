@@ -4,15 +4,15 @@ import "./Weather.css";
 const Weather = ({
   latitude,
   longitude,
-  weather_icon,
   weather_description,
   weather_temperature,
   weather_units,
-  weather_city
+  weather_city,
+  weather_icon
 }) => {
   if (weather_icon === "spinner" || weather_icon === "unavailable") {
     return (
-      <div className="Dashboard">
+      <div>
         <h1 className="title">Weather</h1>
         <h2 className="subtitle">Current Conditions</h2>
         <div className="content">
@@ -29,7 +29,7 @@ const Weather = ({
     );
   } else {
     return (
-      <div className="Dashboard">
+      <div>
         <h1 className="title">Weather</h1>
         <h2 className="subtitle">Current Conditions</h2>
         <div className="content">

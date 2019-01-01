@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./App.css";
-import Dashboard from "./Dashboard";
-import Wednesday from "./components/App/Wednesday/Wednesday";
 import Navbar from "./components/App/Navbar/Navbar";
-import Spotify from "./components/App/Spotify/Spotify";
-import Weather from "./components/App/Weather/Weather";
-import Vehicle from "./components/App/Vehicle/Vehicle";
+import Dashboard from "./components/App/Dashboard/Dashboard";
+import Wednesday from "./components/App/Wednesday/Wednesday";
+
 import {
   todaysDate,
   myLocation,
@@ -45,6 +43,7 @@ class App extends Component {
       weather_description: "Weather loading..."
     });
     myLocation()
+      .catch(err => alert(`Error getting location: ${err}`))
       .then(coords => {
         this.setState(coords);
         return weather(
@@ -54,7 +53,6 @@ class App extends Component {
           process.env.REACT_APP_OPENWEATHER_KEY
         );
       })
-      .catch(err => alert(`Error getting location: ${err}`))
       .then(response => {
         this.setState({
           weather_icon: weatherIcon(
@@ -79,38 +77,27 @@ class App extends Component {
   }
 
   render() {
-    const passNavigationOn = {
+    const passOnNavigation = {
       navigateTo: this.navigateTo,
       navigationCurrent: this.state.navigationCurrent
     };
+
+    const passOnState = {
+      longitude: this.state.longitude,
+      latitude: this.state.latitude,
+      weather_icon: this.state.weather_icon,
+      weather_description: this.state.weather_description,
+      weather_units: this.state.weather_units,
+      weather_temperature: this.state.weather_temperature,
+      weather_city: this.state.weather_city
+    };
+
     return (
-      <Router>
-        <div className="App">
-          <Navbar passNavigationOn={passNavigationOn} />
-          <Switch>
-            <Route exact path="/" render={() => <Dashboard cont="home" />} />
-            <Route path="/home" render={() => <Dashboard cont="home" />} />
-            <Route
-              path="/weather"
-              render={() => (
-                <Weather
-                  longitude={this.state.longitude}
-                  latitude={this.state.latitude}
-                  weather_icon={this.state.weather_icon}
-                  weather_description={this.state.weather_description}
-                  weather_units={this.state.weather_units}
-                  weather_temperature={this.state.weather_temperature}
-                  weather_city={this.state.weather_city}
-                />
-              )}
-            />
-            <Route path="/spotify" component={Spotify} />
-            <Route path="/vehicle" render={() => <Vehicle />} />
-            <Route path="/" render={() => <Dashboard cont="wat" />} />
-          </Switch>
-          <Wednesday id="Wednesday" />
-        </div>
-      </Router>
+      <div className="App">
+        <Navbar passOnNavigation={passOnNavigation} />
+        <Dashboard {...passOnState} passOnState={passOnState} />
+        <Wednesday id="Wednesday" />
+      </div>
     );
   }
 }

@@ -2,7 +2,7 @@ import React from "react";
 
 const Spotify = () => {
   return (
-    <div className="Dashboard">
+    <div>
       <h1 className="title">spotify</h1>
     </div>
   );

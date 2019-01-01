@@ -100,7 +100,7 @@ function isItDayOrNight(sunset) {
 }
 
 function weatherIcon(weatherCode, dayOrNight) {
-  let icon = "question.png";
+  let icon = "unavailable";
   const conditionPrefix = String(weatherCode).substr(0, 1);
   switch (conditionPrefix) {
     case "2":
