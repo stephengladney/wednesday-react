@@ -1,3 +1,14 @@
 .navItem {
-  padding: 35px 20px 35px 30px;
+  margin-bottom: 20px;
+  height: 120px;
+}
+
+img {
+  vertical-align: middle;
+}
+
+.helper {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
 }

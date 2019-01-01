@@ -1,0 +1,23 @@
+div.weatherDescription {
+  display: inline;
+  line-height: 128px;
+  font-size: 18px;
+}
+
+div.weatherTemperature {
+  display: inline;
+  line-height: 128px;
+  font-size: 48px;
+  font-family: "Michroma", sans-serif;
+}
+
+img.weatherIcon {
+  height: 128px;
+  width: 128px;
+  vertical-align: middle;
+  line-height: 128px;
+  margin: 0px 10px 0px 0px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: red;
+}

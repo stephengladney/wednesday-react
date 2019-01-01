@@ -2,6 +2,26 @@ import React from "react";
 import "./NavItem.css";
 
 const NavItem = ({ item, icon, navigationCurrent, navigateTo }) => {
+  switch (icon) {
+    case "model_s":
+      icon = (
+        <img
+          src="images/model_s.svg"
+          style={{ height: "112px", width: "112px" }}
+        />
+      );
+      break;
+    case "weather":
+      icon = (
+        <img
+          src="images/weather_icons/cloud_sun.png"
+          style={{ height: "65px", width: "65px" }}
+        />
+      );
+      break;
+    default:
+      icon = <i className={icon + " icon huge"} />;
+  }
   return (
     <div
       style={{
@@ -10,7 +30,8 @@ const NavItem = ({ item, icon, navigationCurrent, navigateTo }) => {
       className="navItem"
       onClick={() => navigateTo(item)}
     >
-      <i className={icon + " icon huge"} />
+      <span className="helper" />
+      {icon}
     </div>
   );
 };
