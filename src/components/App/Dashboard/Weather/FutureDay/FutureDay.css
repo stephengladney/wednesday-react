@@ -1,0 +1,36 @@
+div.weatherFutureDay {
+  /* border-style: solid;
+  border-width: 1px;
+  border-color: white; */
+  padding: 10px;
+  text-align: center;
+  width: 160px;
+}
+
+h1.weatherFutureDayHeader {
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+  margin: 10px;
+  text-transform: uppercase;
+  color: #ff5e54;
+}
+
+span.HiLoLabel {
+  color: #888888;
+}
+
+span.HiLoValue {
+  color: #ffffff;
+}
+
+div.HiLo {
+  display: flex;
+  flex-direction: column;
+  font-family: "Prompt";
+}
+
+div.weatherFutureDayTemperature {
+  font-size: 18px;
+  font-family: "Oxygen", sans-serif;
+}

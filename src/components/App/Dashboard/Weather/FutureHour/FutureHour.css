@@ -1,0 +1,20 @@
+div.weatherFutureHour {
+  text-align: center;
+  width: 160px;
+}
+
+h1.weatherFutureHourHeader {
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+  margin: 10px;
+  text-transform: uppercase;
+  color: #ff5e54;
+}
+
+div.weatherFutureHourTemperature {
+  margin: 10px 0px 10px 0px;
+  font-size: 24px;
+  font-family: "Oxygen", sans-serif;
+  color: #bbbbbb;
+}

@@ -1,0 +1,11 @@
+span.weatherSummaryDetailLabel {
+  font-weight: 500;
+  color: #ff5e54;
+  font-family: "Prompt";
+}
+
+span.weatherSummaryDetailValue {
+  font-weight: normal;
+  color: #ffffff;
+  font-family: "Prompt";
+}

@@ -7,16 +7,16 @@ const Navbar = ({ passOnNavigation }) => {
   return (
     <div className="Navbar">
       <Link to={"/home"} className="Link">
-        <NavItem item="home" icon="home" {...passOnNavigation} />
+        <NavItem item="home" icon="home" />
       </Link>
       <Link to={"/vehicle"} className="Link">
-        <NavItem item="vehicle" icon="model_s" {...passOnNavigation} />
+        <NavItem item="vehicle" icon="model_s" />
       </Link>
       <Link to={"/weather"} className="Link">
-        <NavItem item="weather" icon="weather" {...passOnNavigation} />
+        <NavItem item="weather" icon="weather" />
       </Link>
       <Link to={"/spotify"} className="Link">
-        <NavItem item="spotify" icon="spotify" {...passOnNavigation} />
+        <NavItem item="spotify" icon="spotify" />
       </Link>
     </div>
   );

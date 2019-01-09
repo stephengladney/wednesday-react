@@ -1,12 +1,60 @@
 module.exports = {
   todaysDate: todaysDate,
   myLocation: myLocation,
-  getWeatherByLocation: getWeatherByLocation,
+  getCurrentWeatherByLocation: getCurrentWeatherByLocation,
   weatherIcon: weatherIcon,
-  isItDayOrNight: isItDayOrNight
+  isItDayOrNight: isItDayOrNight,
+  abbreviateWeekday: abbreviateWeekday,
+  nextFiveWeekdays: nextFiveWeekdays,
+  updateLocationBasedInfo: updateLocationBasedInfo
 };
 
 let axios = require("axios");
+const days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday"
+];
+
+function abbreviateWeekday(day) {
+  switch (day) {
+    case "Thursday":
+      return "Thurs";
+    default:
+      return String(day).substr(0, 3);
+  }
+}
+// const abbreviatedWeekdays = () =>
+//   days.map(day => {
+//     switch (day) {
+//       case "Thursday":
+//         return "Thur";
+//       default:
+//         return day.substr(0, 3);
+//     }
+//   });
+
+const currentWeekday = () => days[new Date().getDay()];
+
+function nextFiveWeekdays() {
+  let currentDay = days.indexOf(currentWeekday());
+  const nextFiveDays = [];
+  for (let i = 1; i <= 5; i++) {
+    switch (currentDay) {
+      case days.length - 1:
+        currentDay = 0;
+        break;
+      default:
+        currentDay++;
+    }
+    nextFiveDays.push(days[currentDay]);
+  }
+  return nextFiveDays;
+}
 
 function todaysDate(format) {
   const today = new Date();
@@ -87,7 +135,51 @@ function myLocation() {
   );
 }
 
-function getWeatherByLocation(latitude, longitude, units, apiKey) {
+function updateLocationBasedInfo() {
+  let finalResponse = {};
+  return new Promise((resolve, reject) =>
+    myLocation()
+      .catch(err => alert(`Error getting location: ${err}`))
+      .then(coords => {
+        finalResponse.latitude = coords.latitude;
+        finalResponse.longitude = coords.longitude;
+        getCurrentWeatherByLocation(
+          Number(coords.latitude).toFixed(4),
+          Number(coords.longitude).toFixed(4),
+          "imperial",
+          process.env.REACT_APP_OPENWEATHER_KEY
+        )
+          .then(response => {
+            let weather = {
+              icon: weatherIcon(
+                response.data.weather[0].id,
+                isItDayOrNight(response.data.sys.sunset)
+              ),
+              description: response.data.weather[0].description,
+              temperature: Number(response.data.main.temp).toFixed(),
+              city: response.data.name,
+              high: Number(response.data.main.temp_max).toFixed(),
+              low: Number(response.data.main.temp_min).toFixed(),
+              humidity: response.data.main.humidity,
+              wind: response.data.wind.speed,
+              sunrise: response.data.sys.sunrise,
+              sunset: response.data.sys.sunset,
+              clouds: response.data.clouds.all
+            };
+            finalResponse.weather = weather;
+            resolve(finalResponse);
+          })
+          .catch(err => {
+            finalResponse.weather = {
+              weather_icon: "unavailable",
+              weather_description: `Weather unavailable (${err})`
+            };
+          });
+      })
+  );
+}
+
+function getCurrentWeatherByLocation(latitude, longitude, units, apiKey) {
   return axios.get(
     `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=${units}&appid=${apiKey}`
   );

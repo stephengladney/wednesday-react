@@ -7,38 +7,65 @@ div.weatherDescription {
 div.weatherTemperature {
   display: inline;
   line-height: 128px;
-  font-size: 48px;
-  font-family: "Michroma", sans-serif;
+  font-size: 72px;
+  font-family: "Oxygen", sans-serif;
   vertical-align: middle;
-  margin: 0px 80px 0px 0px;
+  margin: 0px 80px 0px 20px;
 }
 
-img.weatherIcon {
+div.weatherCurrentConditions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+div.weatherFiveDayForecast {
+  display: flex;
+  justify-content: space-between;
+}
+
+img.weatherIconBig {
   height: 128px;
   width: 128px;
   vertical-align: middle;
-  line-height: 128px;
-  margin: 0px 20px 0px 0px;
+  margin: 0px 0px 0px 0px;
+}
+
+img.weatherIconSmall {
+  height: 84px;
+  width: 84px;
+  vertical-align: middle;
+  margin: 0px 0px 10px 0px;
 }
 
 table.weatherSummary {
-  display: inline-block;
-  height: 100%;
+  flex-grow: 1;
+  /* height: 100%; */
   vertical-align: middle;
+  margin: 0px 0px 0px 20px;
+}
+
+table.weatherSummary tr {
+  width: 100%;
 }
 
 table.weatherSummary td {
-  padding-right: 40px;
-  font-size: 20px;
+  /* padding-right: 40px; */
+  font-size: 18px;
+  /* border-style: solid;
+  border-color: red; */
+}
+
+div.darkSkyWatermark {
+  margin: 5px 0px 0px 0px;
+  text-align: center;
+  color: #eeeeee;
+  font-style: italic;
+  font-size: 14px;
 }
 
 .helper {
   display: inline-block;
   height: 100%;
   vertical-align: middle;
-}
-
-span.weatherSummaryDetail {
-  font-weight: bold;
-  color: #888888;
 }

@@ -14,14 +14,23 @@ const Dashboard = ({
   weather_units,
   weather_temperature,
   weather_city,
-  passOnState
+  passOnState,
+  updateLocationBasedInformation
 }) => {
   return (
     <div className="Dashboard">
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/home" component={Home} />
-        <Route path="/weather" render={() => <Weather {...passOnState} />} />
+        <Route
+          path="/weather"
+          render={() => (
+            <Weather
+              updateLocationBasedInformation={updateLocationBasedInformation}
+              {...passOnState}
+            />
+          )}
+        />
         <Route path="/spotify" component={Spotify} />
         <Route path="/vehicle" render={() => <Vehicle />} />
         <Route path="/" render={() => <Dashboard cont="wat" />} />
