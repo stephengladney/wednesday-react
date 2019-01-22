@@ -16,23 +16,7 @@ import {
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      latitude: 0,
-      longitude: 0
-    };
-  }
-
-  componentDidMount() {
-    this.setState({
-      weather_icon: "spinner",
-      weather_description: "Weather loading..."
-    });
-    updateLocationBasedInfo().then(newInfo => {
-      this.setState({
-        latitude: newInfo.latitude,
-        longitude: newInfo.longitude
-      });
-    });
+    
   }
 
   render() {

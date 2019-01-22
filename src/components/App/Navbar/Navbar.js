@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./Navbar.css";
 import NavItem from "./NavItem/NavItem";
 
-const Navbar = ({ passOnNavigation }) => {
+const Navbar = () => {
   return (
     <div className="Navbar">
       <Link to={"/home"} className="Link">

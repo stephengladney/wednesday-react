@@ -1,12 +1,13 @@
 module.exports = {
   todaysDate: todaysDate,
+  timeNow: timeNow,
   myLocation: myLocation,
-  getCurrentWeatherByLocation: getCurrentWeatherByLocation,
+  getWeatherByLocation: getWeatherByLocation,
   weatherIcon: weatherIcon,
   isItDayOrNight: isItDayOrNight,
   abbreviateWeekday: abbreviateWeekday,
   nextFiveWeekdays: nextFiveWeekdays,
-  updateLocationBasedInfo: updateLocationBasedInfo
+  weatherService: weatherService
 };
 
 let axios = require("axios");
@@ -28,15 +29,6 @@ function abbreviateWeekday(day) {
       return String(day).substr(0, 3);
   }
 }
-// const abbreviatedWeekdays = () =>
-//   days.map(day => {
-//     switch (day) {
-//       case "Thursday":
-//         return "Thur";
-//       default:
-//         return day.substr(0, 3);
-//     }
-//   });
 
 const currentWeekday = () => days[new Date().getDay()];
 
@@ -104,6 +96,31 @@ function todaysDate(format) {
   return output;
 }
 
+function toDoubleDigit(i) {
+  return i < 10 ? "0" + String(i) : String(i);
+}
+
+function timeNow(format = 12 /* || 24 */) {
+  const today = new Date(),
+    h = today.getHours(),
+    m = today.getMinutes();
+
+  const toTwelveHour = i => {
+      if (i == 0) {
+        return 12;
+      } else if (i > 12) {
+        return i - 12;
+      } else {
+        return i;
+      }
+    },
+    addAmPm = i => (i < 12 ? "AM" : "PM");
+
+  return format === 24
+    ? toDoubleDigit(h) + ":" + toDoubleDigit(m)
+    : toTwelveHour(h) + ":" + toDoubleDigit(m) + " " + addAmPm(h);
+}
+
 function myLocation() {
   return new Promise((resolve, reject) =>
     navigator.geolocation.getCurrentPosition(
@@ -135,53 +152,70 @@ function myLocation() {
   );
 }
 
-function updateLocationBasedInfo() {
-  let finalResponse = {};
-  return new Promise((resolve, reject) =>
+function weatherService() {
+  return new Promise((resolve, reject) => {
     myLocation()
-      .catch(err => alert(`Error getting location: ${err}`))
       .then(coords => {
-        finalResponse.latitude = coords.latitude;
-        finalResponse.longitude = coords.longitude;
-        getCurrentWeatherByLocation(
-          Number(coords.latitude).toFixed(4),
-          Number(coords.longitude).toFixed(4),
-          "imperial",
-          process.env.REACT_APP_OPENWEATHER_KEY
-        )
-          .then(response => {
-            let weather = {
-              icon: weatherIcon(
-                response.data.weather[0].id,
-                isItDayOrNight(response.data.sys.sunset)
-              ),
-              description: response.data.weather[0].description,
-              temperature: Number(response.data.main.temp).toFixed(),
-              city: response.data.name,
-              high: Number(response.data.main.temp_max).toFixed(),
-              low: Number(response.data.main.temp_min).toFixed(),
-              humidity: response.data.main.humidity,
-              wind: response.data.wind.speed,
-              sunrise: response.data.sys.sunrise,
-              sunset: response.data.sys.sunset,
-              clouds: response.data.clouds.all
-            };
-            finalResponse.weather = weather;
-            resolve(finalResponse);
+        coords.latitude = Number(coords.latitude).toFixed(4);
+        coords.longitude = Number(coords.longitude).toFixed(4);
+        axios
+          .get(`api/weather/${coords.latitude},${coords.longitude}`)
+          .then(data => {
+            resolve(data.data);
           })
-          .catch(err => {
-            finalResponse.weather = {
-              weather_icon: "unavailable",
-              weather_description: `Weather unavailable (${err})`
-            };
-          });
+          .catch(e => reject(`Error getting weather: ${e}`));
       })
-  );
+      .catch(e => reject(`Error getting location: ${e}`));
+  });
 }
 
-function getCurrentWeatherByLocation(latitude, longitude, units, apiKey) {
+// This function has been deprecated...
+// function updateLocationBasedInfo() {
+//   let finalResponse = {};
+//   return new Promise((resolve, reject) =>
+//     myLocation()
+//       .catch(err => reject(`Error getting location: ${err}`))
+//       .then(coords => {
+//         finalResponse.latitude = coords.latitude;
+//         finalResponse.longitude = coords.longitude;
+//         getWeatherByLocation(
+//           process.env.REACT_APP_DARKSKY_SECRET_KEY,
+//           Number(coords.latitude).toFixed(4),
+//           Number(coords.longitude).toFixed(4)
+//         )
+//           .then(response => {
+//             let weather = {
+//               icon: weatherIcon(
+//                 response.data.weather[0].id,
+//                 isItDayOrNight(response.data.sys.sunset)
+//               ),
+//               description: response.data.currently.summary,
+//               temperature: Number(response.data.temperature).toFixed(),
+//               high: Number(response.data.main.temp_max).toFixed(), // <---------HERE
+//               low: Number(response.data.main.temp_min).toFixed(),
+//               humidity: response.data.main.humidity,
+//               wind: response.data.wind.speed,
+//               sunrise: response.data.sys.sunrise,
+//               sunset: response.data.sys.sunset,
+//               clouds: response.data.clouds.all
+//             };
+//             finalResponse.weather = weather;
+//             resolve(finalResponse);
+//           })
+//           .catch(err => {
+//             finalResponse.weather = {
+//               icon: "unavailable",
+//               description: `Weather unavailable (${err})`
+//             };
+//             reject(finalResponse);
+//           });
+//       })
+//   );
+// }
+
+function getWeatherByLocation(apiKey, latitude, longitude) {
   return axios.get(
-    `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=${units}&appid=${apiKey}`
+    `https://api.darksky.net/forecast/${apiKey}/${latitude},${longitude}`
   );
 }
 
@@ -191,49 +225,20 @@ function isItDayOrNight(sunset) {
   if (Number(sunset) < currentTime) return "night";
 }
 
-function weatherIcon(weatherCode, dayOrNight) {
-  let icon = "unavailable";
-  const conditionPrefix = String(weatherCode).substr(0, 1);
-  switch (conditionPrefix) {
-    case "2":
-      icon = "thunderstorm.png";
-      break;
-    case "3":
-      icon = "rain_light.png";
-      break;
-    case "5":
-      switch (Number(weatherCode)) {
-        case 500:
-          icon = "rain_light.png";
-          break;
-        case 501:
-          icon = "rain.png";
-          break;
-        default:
-          icon = "rain_heavy.png";
-      }
-      break;
-    case "6":
-      icon = "snow.png";
-    case "7":
-      icon = "fog.svg";
-      break;
-    case "8":
-      switch (weatherCode > 802) {
-        case true:
-          icon = "cloud.png";
-          break;
-        default:
-          const sunOrMoon = dayOrNight === "day" ? "sun" : "moon";
-          if (Number(weatherCode) === 800) icon = `${sunOrMoon}.png`;
-          if (Number(weatherCode) === 801 || weatherCode === 802)
-            icon = `cloud_${sunOrMoon}.png`;
-      }
-      break;
-    default:
-      alert("prefix not 2,3,5,6,7, or 8");
-  }
-  return icon;
+function weatherIcon(condition) {
+  // sleet, wind
+  const icons = {
+    "clear-day": "sun.png",
+    "clear-night": "moon.png",
+    rain: "rain.png",
+    snow: "snow.png",
+    fog: "fog.svg",
+    cloudy: "cloud.png",
+    "partly-cloudy-day": "cloud_sun.png",
+    "partly-cloudy-night": "cloud_moon.png",
+    default: "n/a"
+  };
+  return icons[condition] || icons.default;
 }
 function doubleDigit(i) {
   return i < 10 ? "0" + String(i) : String(i);

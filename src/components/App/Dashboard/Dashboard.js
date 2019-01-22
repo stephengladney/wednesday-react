@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import "./Dashboard.css";
 import Spotify from "./Spotify/Spotify";
 import Weather from "./Weather/Weather";
