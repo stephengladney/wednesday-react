@@ -7,7 +7,11 @@ module.exports = {
   isItDayOrNight: isItDayOrNight,
   abbreviateWeekday: abbreviateWeekday,
   nextFiveWeekdays: nextFiveWeekdays,
-  weatherService: weatherService
+  weatherService: weatherService,
+  toTwelveHour: toTwelveHour,
+  toDoubleDigit: toDoubleDigit,
+  standardizeTime: standardizeTime,
+  militarizeTime: militarizeTime
 };
 
 let axios = require("axios");
@@ -28,6 +32,20 @@ function abbreviateWeekday(day) {
     default:
       return String(day).substr(0, 3);
   }
+}
+
+function standardizeTime(raw) {
+  const time = new Date(raw * 1000);
+  const h = time.getHours();
+  const m = time.getMinutes();
+  return `${toTwelveHour(h)}:${toDoubleDigit(m)} ${addAmPm(h)}`;
+}
+
+function militarizeTime(raw) {
+  const time = new Date(raw * 1000);
+  const h = time.getHours();
+  const m = time.getMinutes();
+  return `${toDoubleDigit(h)}:${toDoubleDigit(m)}`;
 }
 
 const currentWeekday = () => days[new Date().getDay()];
@@ -100,25 +118,28 @@ function toDoubleDigit(i) {
   return i < 10 ? "0" + String(i) : String(i);
 }
 
+function toTwelveHour(i) {
+  if (i == 0) {
+    return 12;
+  } else if (i > 12) {
+    return i - 12;
+  } else {
+    return i;
+  }
+}
+
+function addAmPm(i) {
+  return i < 12 ? "AM" : "PM";
+}
+
 function timeNow(format = 12 /* || 24 */) {
   const today = new Date(),
     h = today.getHours(),
     m = today.getMinutes();
 
-  const toTwelveHour = i => {
-      if (i == 0) {
-        return 12;
-      } else if (i > 12) {
-        return i - 12;
-      } else {
-        return i;
-      }
-    },
-    addAmPm = i => (i < 12 ? "AM" : "PM");
-
   return format === 24
-    ? toDoubleDigit(h) + ":" + toDoubleDigit(m)
-    : toTwelveHour(h) + ":" + toDoubleDigit(m) + " " + addAmPm(h);
+    ? `${toDoubleDigit(h)}:${toDoubleDigit(m)}`
+    : `${toTwelveHour(h)}:${toDoubleDigit(m)} ${addAmPm(h)}`;
 }
 
 function myLocation() {

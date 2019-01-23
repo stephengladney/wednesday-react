@@ -24,12 +24,7 @@ const Dashboard = ({
         <Route path="/home" component={Home} />
         <Route
           path="/weather"
-          render={() => (
-            <Weather
-              updateLocationBasedInformation={updateLocationBasedInformation}
-              {...passOnState}
-            />
-          )}
+          render={() => <Weather timeFormat="standard" units="imperial" />}
         />
         <Route path="/spotify" component={Spotify} />
         <Route path="/vehicle" render={() => <Vehicle />} />

@@ -7,7 +7,9 @@ import {
   abbreviateWeekday,
   myLocation,
   getWeatherByLocation,
-  weatherService
+  weatherService,
+  standardizeTime,
+  militarizeTime
 } from "../../../../wednesday";
 import WeatherSummaryDetail from "./WeatherSummaryDetail/WeatherSummaryDetail";
 import axios from "axios";
@@ -20,7 +22,24 @@ class Weather extends Component {
   }
   updateWeather() {
     weatherService()
-      .then(weather => this.setState(weather))
+      .then(weather => {
+        const sunrise = weather.daily.data[0].sunriseTime;
+        const sunset =  weather.daily.data[0].sunsetTime;
+        this.setState({
+        current: {
+          summary: weather.currently.summary,
+          icon: weather.currently.icon,
+          temperature: weather.currently.temperature,
+          cloudCoverage: weather.currently.cloudCover,
+          humidity: weather.currently.humidity,
+          windSpeed: weather.currently.windSpeed,
+          high: Number(weather.daily.data[0].temperatureHigh).toFixed(),
+          low: Number(weather.daily.data[0].temperatureLow).toFixed(),
+          sunrise: this.props.timeFormat === "standard" ? standardizeTime(sunrise) : militarizeTime(sunrise),
+          sunset: this.props.timeFormat === "standard" ? standardizeTime(sunset) : militarizeTime(sunset)
+        }
+      })
+    })
       .catch(e => console.log(e));
   }
   componentDidMount() {
@@ -32,155 +51,60 @@ class Weather extends Component {
   }
 
   render() {
-    return `${this.state.latitude}`;
-  }
-}
-// if (weather_icon === "spinner") {
-//   return (
-//     <div>
-//       <div
-//         style={{
-//           display: "flex",
-//           flexDirection: "row",
-//           justifyContent: "space-between",
-//           alignItems: "flex-end"
-//         }}
-//       >
-//         <h1 className="title">Weather</h1>
-//         <div style={{ paddingRight: "20px" }}>
-//           <button
-//             class="ui button inverted secondary"
-//             onClick={updateLocationBasedInformation}
-//           >
-//             Refresh Weather Data
-//           </button>
-//           <div className="darkSkyWatermark">
-//             Powered by <a href="https://darksky.net/poweredby/">Dark Sky</a>
-//           </div>
-//         </div>
-//       </div>
-//       <div class="ui segment">
-//         <div class="ui active dimmer">
-//           <div class="ui huge text loader">Loading</div>
-//         </div>
-//         <p />
-//       </div>
-//     </div>
-//   );
-// } else if (weather_icon === "unavailable") {
-//   return (
-//     <div
-//       style={{
-//         display: "flex",
-//         flexDirection: "column",
-//         justifyContent: "flex-start"
-//       }}
-//     >
-//       <div
-//         style={{
-//           display: "flex",
-//           flexDirection: "row",
-//           justifyContent: "space-between",
-//           alignItems: "flex-end"
-//         }}
-//       >
-//         <h1 className="title">Weather</h1>
-//         <div style={{ paddingRight: "20px" }}>
-//           <button
-//             class="ui button inverted secondary"
-//             onClick={updateLocationBasedInformation}
-//           >
-//             Refresh Weather Data
-//           </button>
-//           <div className="darkSkyWatermark">
-//             Powered by <a href="https://darksky.net/poweredby/">Dark Sky</a>
-//           </div>
-//         </div>
-//       </div>
-//       <div className="content" style={{ textAlign: "center" }}>
-//         <h1>
-//           <br />
-//           <br />
-//           <br />
-//           <br />
-//         </h1>
-//         <i
-//           className="exclamation triangle icon huge"
-//           style={{ marginBottom: "20px" }}
-//         />
-//         <br />
-//         Could not load weather data.
-//       </div>
-//     </div>
-//   );
-// } else {
-// weather_sunrise = new Date(Number(weather_sunrise) * 1000);
-// weather_sunset = new Date(Number(weather_sunset) * 1000);
-// weather_sunrise = String(
-//   `${weather_sunrise.getHours()}:${weather_sunrise.getMinutes()} ${
-//     weather_sunrise.getHours() < 12 ? "AM" : "PM"
-//   }`
-// );
-// weather_sunset = String(
-//   `${
-//     weather_sunset.getHours() < 12
-//       ? weather_sunset.getHours()
-//       : weather_sunset.getHours() - 12
-//   }:${weather_sunset.getMinutes()} ${
-//     weather_sunset.getHours() < 12 ? "AM" : "PM"
-//   }`
-// );
-// const dayPreference = "long";
-// const fiveDayForecast = nextFiveWeekdays().map(day => (
-//   <FutureDay
-//     day={dayPreference === "short" ? abbreviateWeekday(day) : day}
-//     high="68"
-//     low="57"
-//   />
-// ));
-// const todayForecast = ["4PM", "7PM", "10PM", "1AM"].map(time => (
-//   <FutureHour hour={time} temperature="64" />
-// ));
-// return (
-//   <div>
-//     <div
-//       style={{
-//         display: "flex",
-//         flexDirection: "row",
-//         justifyContent: "space-between",
-//         alignItems: "flex-end"
-//       }}
-//     >
-//       <h1 className="title">Weather</h1>
-//       <div style={{ paddingRight: "20px" }}>
-//         <button
-//           class="ui button inverted secondary"
-//           onClick={updateLocationBasedInformation}
-//         >
-//           Refresh Weather Data
-//         </button>
-//         <div className="darkSkyWatermark">
-//           Powered by <a href="https://darksky.net/poweredby/">Dark Sky</a>
-//         </div>
-//       </div>
-//     </div>
-//     <div className="content">
-//       <h2 className="subtitle">Current Conditions</h2>
-//       <div className="weatherCurrentConditions">
-//         <span class="helper" />
-//         <img
-//           className="weatherIconBig"
-//           src={`/images/weather_icons/${weather_icon}`}
-//           alt="weather icon"
-//         />{" "}
-//         <div className="weatherTemperature">
-//           {weather_temperature} {weather_units === "imperial" ? "°F" : "°C"}
-//         </div>
-//         {/* <div className="weatherSummary"> */}
+    
+  
+const dayPreference = "long";
+const fiveDayForecast = nextFiveWeekdays().map(day => (
+  <FutureDay
+    day={dayPreference === "short" ? abbreviateWeekday(day) : day}
+    high="68"
+    low="57"
+  />
+));
+const todayForecast = ["4PM", "7PM", "10PM", "1AM"].map(time => (
+  <FutureHour hour={time} temperature="64" />
+));
+return (
+  <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "flex-end"
+      }}
+    >
+      <h1 className="title">Weather</h1>
+      <div style={{ paddingRight: "20px" }}>
+        <button
+          class="ui button inverted secondary"
+          onClick={this.updateWeather}
+        >
+          Refresh Weather Data
+        </button>
+        <div className="darkSkyWatermark">
+          Powered by <a href="https://darksky.net/poweredby/">Dark Sky</a>
+        </div>
+      </div>
+    </div>
+    <div className="content">
+      <h2 className="subtitle">Current Conditions</h2>
+      <div className="weatherCurrentConditions">
+        <span class="helper" />
+        <img
+          className="weatherIconBig"
+          src={`/images/weather_icons/${this.state.current.icon}`}
+          alt="weather icon"
+        />{" "}
+        <div className="weatherTemperature">
+          {this.state.current.temperature} {this.props.units === "imperial" ? "°F" : "°C"}
+        </div>
+        
+//         <div className="weatherSummary"> 
 //         <table className="weatherSummary">
-//           <tr>
-//             <td>
-//               <WeatherSummaryDetail
+//            <tr>
+//              <td>
+//                <WeatherSummaryDetail 
 //                 detailName="Conditions"
 //                 detailValue={weather_description}
 //               />
@@ -228,7 +152,9 @@ class Weather extends Component {
 //       <div className="weatherFiveDayForecast">{fiveDayForecast}</div>
 //     </div>
 //   </div>
-//   // </div>
+//    </div>
 // );
 // };
+)}
+}
 export default Weather;
