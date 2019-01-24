@@ -50,7 +50,7 @@ table.weatherSummary tr {
 }
 
 table.weatherSummary td {
-  /* padding-right: 40px; */
+  padding-right: 40px;
   font-size: 18px;
   /* border-style: solid;
   border-color: red; */

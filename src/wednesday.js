@@ -11,7 +11,8 @@ module.exports = {
   toTwelveHour: toTwelveHour,
   toDoubleDigit: toDoubleDigit,
   standardizeTime: standardizeTime,
-  militarizeTime: militarizeTime
+  militarizeTime: militarizeTime,
+  abbreviateTime: abbreviateTime
 };
 
 let axios = require("axios");
@@ -140,6 +141,12 @@ function timeNow(format = 12 /* || 24 */) {
   return format === 24
     ? `${toDoubleDigit(h)}:${toDoubleDigit(m)}`
     : `${toTwelveHour(h)}:${toDoubleDigit(m)} ${addAmPm(h)}`;
+}
+
+function abbreviateTime(time) {
+  const timeArray = time.split("");
+  const removed = timeArray.splice(timeArray.indexOf(":"), 4);
+  return timeArray.join("");
 }
 
 function myLocation() {
