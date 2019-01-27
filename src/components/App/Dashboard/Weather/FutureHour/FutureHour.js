@@ -1,16 +1,16 @@
 import React from "react";
 import "./FutureHour.css";
 
-const FutureHour = ({ hour, temperature }) => {
+const FutureHour = ({ hour, icon, temperature }) => {
   return (
     <div className="weatherFutureHour">
       <h1 className="weatherFutureHourHeader">{hour}</h1>
       <img
-        className="weatherIconBig"
-        src={`/images/weather_icons/sun.png`}
+        className="weatherIconSmall"
+        src={`/images/weather_icons/${icon}.png`}
         alt="weather icon"
       />
-      <div className="weatherFutureHourTemperature">{temperature}°F</div>
+      <div className="weatherFutureHourTemperature">{temperature} °F</div>
     </div>
   );
 };

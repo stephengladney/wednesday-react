@@ -1,13 +1,13 @@
 import React from "react";
 import "./FutureDay.css";
 
-const FutureDay = ({ day, high, low }) => {
+const FutureDay = ({ day, icon, high, low }) => {
   return (
     <div className="weatherFutureDay">
       <h1 className="weatherFutureDayHeader">{day}</h1>
       <img
         className="weatherIconSmall"
-        src={`/images/weather_icons/sun.png`}
+        src={`/images/weather_icons/${icon}.png`}
         alt="weather icon"
       />
       <div className="HiLo">

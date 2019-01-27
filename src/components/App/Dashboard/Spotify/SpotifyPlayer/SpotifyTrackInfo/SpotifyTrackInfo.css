@@ -1,0 +1,16 @@
+div.spotifyTrackInfo {
+  margin-left: 20px;
+}
+div.spotifyTrackInfoHeader {
+  font-size: 32px;
+  font-family: "Lato", sans-serif;
+  font-weight: normal;
+  color: #ff5e54;
+}
+div.spotifyTrackInfoText {
+  font-size: 32px;
+  font-family: "Lato", sans-serif;
+  font-weight: normal;
+  color: #ffffff;
+  margin-bottom: 25px;
+}

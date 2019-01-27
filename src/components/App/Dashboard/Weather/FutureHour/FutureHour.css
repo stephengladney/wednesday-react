@@ -6,7 +6,7 @@ div.weatherFutureHour {
 h1.weatherFutureHourHeader {
   text-align: center;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 18px;
   margin: 5px;
   text-transform: uppercase;
   color: #ff5e54;
@@ -14,7 +14,8 @@ h1.weatherFutureHourHeader {
 
 div.weatherFutureHourTemperature {
   margin: 5px 0px 5px 0px;
-  font-size: 14px;
+  font-size: 18px;
+  font-weight: bold;
   font-family: "Oxygen", sans-serif;
   color: #bbbbbb;
 }

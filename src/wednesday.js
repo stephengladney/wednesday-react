@@ -12,10 +12,15 @@ module.exports = {
   toDoubleDigit: toDoubleDigit,
   standardizeTime: standardizeTime,
   militarizeTime: militarizeTime,
-  abbreviateTime: abbreviateTime
+  abbreviateTime: abbreviateTime,
+  randomWednesdayQuote: randomWednesdayQuote,
+  getSpotifyToken: getSpotifyToken,
+  spotifyPlayerCommand: spotifyPlayerCommand,
+  spotifyCurrentlyPlaying: spotifyCurrentlyPlaying
 };
 
-let axios = require("axios");
+const axios = require("axios");
+
 const days = [
   "Sunday",
   "Monday",
@@ -25,6 +30,57 @@ const days = [
   "Friday",
   "Saturday"
 ];
+
+function randomWednesdayQuote() {
+  const quotes = [
+    "Mon cher.",
+    "Nobody gets out of the Bermuda Triangle, not even for a vacation. Everyone knows that.",
+    "Are they made from real Girl Scouts?",
+    "If I wanted to kill my husband, I'd do it, and I wouldn't get caught.",
+    "I'll clean my room. In exchange for your immortal soul.",
+    "Do not trust the Pilgrims, especially Sarah Miller.",
+    "Don't be a baby. I know what I'm doing."
+  ];
+  return quotes[Math.floor(Math.random() * quotes.length)];
+}
+
+function spotifyPlayerCommand(command) {
+  return axios({
+    method: "put",
+    url: `https://api.spotify.com/v1/me/player/${command}`,
+    params: {},
+    headers: {
+      Authorization: "Bearer <token>"
+    }
+  });
+}
+function getSpotifyToken(client_id, client_secret, redirect_uri, code) {
+  return axios({
+    method: "post",
+    url: "https://accounts.spotify.com/api/token",
+    params: {
+      code: code,
+      redirect_uri: redirect_uri,
+      grant_type: "authorization_code"
+    },
+    headers: {
+      Authorization:
+        "Basic " +
+        new Buffer(client_id + ":" + client_secret).toString("base64"),
+      "Content-Type": "application/x-www-form-urlencoded"
+    }
+  });
+}
+
+function spotifyCurrentlyPlaying() {
+  return axios({
+    method: "get",
+    url: "https://api.spotify.com/v1/me/player",
+    headers: {
+      Authorization: "Bearer <token>"
+    }
+  });
+}
 
 function abbreviateWeekday(day) {
   switch (day) {

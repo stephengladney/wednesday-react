@@ -21,7 +21,7 @@ const NavItem = ({ item, icon }) => {
     case "weather":
       icon = (
         <img
-          src="images/weather_icons/cloud_sun.png"
+          src="images/weather_icons/partly-cloudy-day.png"
           style={{ height: "65px", width: "65px" }}
           alt="weather"
         />
