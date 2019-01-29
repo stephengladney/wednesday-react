@@ -1,5 +1,5 @@
 div.spotifyTrackInfo {
-  margin-left: 20px;
+  margin: 0px 0px 25px 20px;
 }
 div.spotifyTrackInfoHeader {
   font-size: 32px;
@@ -8,9 +8,10 @@ div.spotifyTrackInfoHeader {
   color: #ff5e54;
 }
 div.spotifyTrackInfoText {
+  margin-right: 10px;
+  display: inline;
   font-size: 32px;
   font-family: "Lato", sans-serif;
   font-weight: normal;
   color: #ffffff;
-  margin-bottom: 25px;
 }

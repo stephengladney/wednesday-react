@@ -13,9 +13,18 @@ const SpotifyPlayer = ({
   album,
   albumArtUrl,
   isPlaying,
-  playPauseButton
+  isLocal,
+  shuffle,
+  shuffleEnabled,
+  next,
+  previous,
+  playOrPause
 }) => {
-  var playButton = isPlaying === true ? "pause" : "play";
+  isLocal = true;
+  var playOrPauseCurrentButton = isPlaying === true ? "pause" : "play";
+  var shuffleButtonColor = shuffleEnabled === true ? { color: "#ff5e54" } : {};
+  var saveButton =
+    isLocal === true ? "check green" : "plus square outline grey";
   return (
     <div>
       <div className="spotifyCurrentTrack">
@@ -24,22 +33,21 @@ const SpotifyPlayer = ({
         </div>
         <div>
           <SpotifyTrackInfo header="Artist" text={artist} />
-          <SpotifyTrackInfo header="Song" text={song} />
+          <SpotifyTrackInfo header="Song" text={song} icon={saveButton} />
           <SpotifyTrackInfo header="Album" text={album} />
         </div>
       </div>
       <div className="spotifyControls">
+        <i className="step backward icon link massive" onClick={previous} />
         <i
-          className="step backward icon inverted link massive"
-          onClick={() => spotifyPlayerCommand("pause")}
+          className={`${playOrPauseCurrentButton} icon link massive`}
+          onClick={() => playOrPause(playOrPauseCurrentButton)}
         />
+        <i className="step forward icon link massive" onClick={next} />
         <i
-          className={`${playButton} icon link massive`}
-          onClick={() => playPauseButton(playButton)}
-        />
-        <i
-          className="step forward icon inverted link massive"
-          onClick={() => spotifyPlayerCommand("pause")}
+          className={`random icon link massive`}
+          style={shuffleButtonColor}
+          onClick={shuffle}
         />
       </div>
     </div>

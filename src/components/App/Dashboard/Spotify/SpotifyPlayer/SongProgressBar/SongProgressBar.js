@@ -1,12 +1,12 @@
 import React from "react";
 import "./SongProgressBar.css";
-import { secondsToMinutes } from "../../../../../../wednesday";
+import { secondsToMinutes } from "../../../../../../time";
 
 const songProgressBar = ({ currentMilliseconds, totalMillieconds }) => {
   return (
     <div className="songProgressBar">
       <h2 className="timeStamp">
-        {secondsToMinutes(Math.ceil(currentMilliseconds / 1000))}
+        {secondsToMinutes(Math.round(currentMilliseconds / 1000))}
       </h2>
 
       <div

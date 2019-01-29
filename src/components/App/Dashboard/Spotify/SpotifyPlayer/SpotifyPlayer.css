@@ -17,3 +17,7 @@ img.spotifyAlbumArtwork {
   border-width: 1px;
   border-color: #ffffff;
 }
+
+i:hover:active {
+  color: #ff5e54;
+}

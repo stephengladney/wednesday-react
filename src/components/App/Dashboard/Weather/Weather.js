@@ -6,13 +6,12 @@ import Loading from "../Loading";
 import {
   nextFiveWeekdays,
   abbreviateWeekday,
-  weatherService,
   standardizeTime,
   militarizeTime,
   abbreviateTime
-} from "../../../../wednesday";
+} from "../../../../time";
+import { weatherService } from "../../../../wednesday";
 import WeatherSummaryDetail from "./WeatherSummaryDetail/WeatherSummaryDetail";
-import axios from "axios";
 
 class Weather extends Component {
   constructor(props) {
