@@ -24,8 +24,8 @@ class Weather extends Component {
   updateWeather() {
     weatherService()
       .then(weather => {
-        const sunrise = weather.daily.data[0].sunriseTime;
-        const sunset = weather.daily.data[0].sunsetTime;
+        const sunrise = Number(weather.daily.data[0].sunriseTime) + 10800; // adjust for Tesla browser PST
+        const sunset = Number(weather.daily.data[0].sunsetTime) + 10800; // adjust for Tesla browser PST
         this.setState({
           loading: false,
           current: {
@@ -121,15 +121,17 @@ class Weather extends Component {
           <div className="content">
             <h2 className="subtitle">Current Conditions</h2>
             <div className="weatherCurrentConditions">
-              <span className="helper" />
-              <img
-                className="weatherIconBig"
-                src={`/images/weather_icons/${this.state.current.icon}.png`}
-                alt="weather icon"
-              />{" "}
-              <div className="weatherTemperature">
-                {this.state.current.temperature}{" "}
-                {this.props.units === "imperial" ? "°F" : "°C"}
+              <div className="iconTempContainer">
+                <span className="helper" />
+                <img
+                  className="weatherIconBig"
+                  src={`/images/weather_icons/${this.state.current.icon}.png`}
+                  alt="weather icon"
+                />{" "}
+                <div className="weatherTemperature">
+                  {this.state.current.temperature}{" "}
+                  {this.props.units === "imperial" ? "°F" : "°C"}
+                </div>
               </div>
               <div className="weatherSummary">
                 <table className="weatherSummary">

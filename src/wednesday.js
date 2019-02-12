@@ -52,12 +52,21 @@ function myLocation() {
 
 function weatherService() {
   return new Promise((resolve, reject) => {
-    myLocation()
-      .then(coords => {
-        coords.latitude = Number(coords.latitude).toFixed(4);
-        coords.longitude = Number(coords.longitude).toFixed(4);
+    axios
+      .get("api/tesla/state/drive")
+      .then(apiResponse => {
+        apiResponse.data.response.latitude = Number(
+          apiResponse.data.response.latitude
+        ).toFixed(4);
+        apiResponse.data.response.longitude = Number(
+          apiResponse.data.response.longitude
+        ).toFixed(4);
         axios
-          .get(`api/weather/${coords.latitude},${coords.longitude}`)
+          .get(
+            `api/weather/${apiResponse.data.response.latitude},${
+              apiResponse.data.response.longitude
+            }`
+          )
           .then(response => {
             resolve(response.data); //response.data b/c it's an axios call
           })

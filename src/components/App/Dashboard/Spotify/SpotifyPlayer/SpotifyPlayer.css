@@ -10,14 +10,14 @@ div.spotifyControls {
   justify-content: space-around;
 }
 
+div.spotifyControls i:hover:active {
+  color: #ff5e54;
+}
+
 img.spotifyAlbumArtwork {
-  height: 375px;
-  width: 375px;
+  height: 280px;
+  width: 280px;
   border-style: solid;
   border-width: 1px;
   border-color: #ffffff;
-}
-
-i:hover:active {
-  color: #ff5e54;
 }

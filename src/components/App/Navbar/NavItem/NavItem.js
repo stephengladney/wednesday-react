@@ -13,7 +13,7 @@ const NavItem = ({ item, icon }) => {
       icon = (
         <img
           src="images/model_s.svg"
-          style={{ height: "112px", width: "112px" }}
+          style={{ height: "56px", width: "56px" }}
           alt="model s"
         />
       );
@@ -22,13 +22,13 @@ const NavItem = ({ item, icon }) => {
       icon = (
         <img
           src="images/weather_icons/partly-cloudy-day.png"
-          style={{ height: "65px", width: "65px" }}
+          style={{ height: "32px", width: "32px" }}
           alt="weather"
         />
       );
       break;
     default:
-      icon = <i className={icon + " icon huge"} />;
+      icon = <i className={icon + " icon big"} />;
   }
   return (
     <div

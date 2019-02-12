@@ -4,19 +4,11 @@ import "./Dashboard.css";
 import Spotify from "./Spotify/Spotify";
 import Weather from "./Weather/Weather";
 import Vehicle from "./Vehicle/Vehicle";
+import News from "./News/News";
+import Settings from "./Settings/Settings";
 import Home from "./Home/Home";
 
-const Dashboard = ({
-  longitude,
-  latitude,
-  weather_icon,
-  weather_description,
-  weather_units,
-  weather_temperature,
-  weather_city,
-  passOnState,
-  updateLocationBasedInformation
-}) => {
+const Dashboard = () => {
   return (
     <div className="Dashboard">
       <Switch>
@@ -28,7 +20,9 @@ const Dashboard = ({
         />
         <Route path="/spotify" component={Spotify} />
         <Route path="/vehicle" render={() => <Vehicle />} />
-        <Route path="/" render={() => <Dashboard cont="wat" />} />
+        <Route path="/news" render={() => <News />} />
+        <Route path="/settings" render={() => <Settings />} />
+        <Route path="/" render={() => "wat"} />
       </Switch>
     </div>
   );

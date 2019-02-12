@@ -18,6 +18,21 @@ const Navbar = () => {
       <Link to={"/spotify"} className="Link">
         <NavItem item="spotify" icon="spotify" />
       </Link>
+      <Link to={"/sports"} className="Link">
+        <NavItem item="sports" icon="football ball" />
+      </Link>
+      <Link to={"/news"} className="Link">
+        <NavItem item="news" icon="newspaper outline" />
+      </Link>
+      <Link to={"/games"} className="Link">
+        <NavItem item="games" icon="gamepad" />
+      </Link>
+      <Link to={"/unomas"} className="Link">
+        <NavItem item="unomas" icon="question circle outline" />
+      </Link>
+      <Link to={"/settings"} className="Link">
+        <NavItem item="settings" icon="cogs" />
+      </Link>
     </div>
   );
 };

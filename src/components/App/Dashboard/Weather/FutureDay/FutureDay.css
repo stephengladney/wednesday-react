@@ -10,8 +10,8 @@ div.weatherFutureDay {
 h1.weatherFutureDayHeader {
   text-align: center;
   font-weight: bold;
-  font-size: 18px;
-  margin: 10px;
+  font-size: 20px;
+  margin: 0px 10px 10px 10px;
   text-transform: uppercase;
   color: #ff5e54;
 }
