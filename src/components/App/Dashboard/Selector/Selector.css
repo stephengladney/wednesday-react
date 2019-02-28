@@ -1,0 +1,13 @@
+div.Selector {
+  display: flex;
+  width: 80%;
+  justify-content: space-evenly;
+}
+
+div.SelectorContainer {
+  margin-bottom: 20px;
+  margin-right: 30px;
+  display: flex;
+  cursor: default;
+  justify-content: center;
+}

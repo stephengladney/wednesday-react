@@ -78,7 +78,7 @@ class Weather extends Component {
         var hour = this.state.hourly[i];
         todayForecast.push(
           <FutureHour
-            hour={abbreviateTime(standardizeTime(hour.time))}
+            hour={abbreviateTime(standardizeTime(hour.time + 10800))}
             temperature={Number(hour.temperature).toFixed()}
             icon={hour.icon}
             key={`hour${i}`}
