@@ -1,0 +1,25 @@
+div.result {
+  font-weight: bold;
+  font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+div.first {
+  color: #ffffff;
+  width: 33%;
+}
+
+div.second {
+  color: #808080;
+  width: 33%;
+  text-align: center;
+}
+
+div.placeholder {
+  color: #000000;
+  width: 33%;
+}
+
+div.itemflex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

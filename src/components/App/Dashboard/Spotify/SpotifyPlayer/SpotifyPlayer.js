@@ -117,10 +117,10 @@ class SpotifyPlayer extends Component {
             this.progressBarOn(true);
           }
         } else {
-          alert("500: " + response.data);
+          alert("Spotify returned empty data.");
         }
       })
-      .catch(error => alert(error));
+      .catch(error => alert("Error getting state:" + error));
   }
 
   render() {

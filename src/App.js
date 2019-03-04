@@ -15,9 +15,14 @@ class App extends Component {
   componentDidMount() {
     this.heartBeat = setInterval(this.pulseCheck, 60000);
   }
+
+  componentWillUnmount() {
+    clearInterval(this.heartBeat);
+  }
+
   pulseCheck() {
     if (Date.now() - this.state.lastHeartbeat > 120000) {
-      alert("Heartbeat was missed");
+      clearInterval(this.heartBeat);
       window.location.reload();
     } else {
       this.setState({
