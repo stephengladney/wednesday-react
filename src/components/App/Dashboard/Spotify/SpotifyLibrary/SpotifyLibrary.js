@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "./SpotifyLibrary.css";
-import { utimesSync } from "fs";
 import Loading from "../../Loading";
 
 let spotifyLibrary = [];
@@ -14,6 +13,7 @@ class SpotifyLibrary extends Component {
     this.state = {
       loading: true,
       listBy: "Artist",
+      sortBy: "Date",
       currentView: "Artists",
       currentArtist: null,
       songCount: 0
@@ -51,12 +51,8 @@ class SpotifyLibrary extends Component {
     });
   }
 
-  playSong(id, index) {
+  playSong(id) {
     axios.get(`api/spotify/player/play?value=${id}`);
-    document.getElementById(`track${index}`).style.color = "#ff5e54";
-    setTimeout(() => {
-      document.getElementById(`track${index}`).style.color = "#ffffff";
-    }, 5000);
   }
 
   render() {
@@ -67,33 +63,38 @@ class SpotifyLibrary extends Component {
         </div>
       );
     }
-    // songList.sort((a, b) => {
-    //   switch (this.state.listBy) {
-    //     case "Artist":
-    //
-    //       break;
-    //     case "Song":
-    //       return String(a.track).toLowerCase() < String(b.track).toLowerCase()
-    //         ? -1
-    //         : 1;
-    //       break;
-    //   }
-    // });
+
     let sortBy = null;
     switch (this.state.currentView) {
       case "Artists":
         uiList = artistList;
         break;
       case "Songs":
-        uiList = spotifyLibrary;
+        uiList = Array(...spotifyLibrary);
+        uiList.sort((a, b) => {
+          switch (this.state.sortBy) {
+            case "Artist":
+              return String(a.artist).toLowerCase() <
+                String(b.artist).toLowerCase()
+                ? -1
+                : 1;
+            case "Song":
+              return String(a.track).toLowerCase() <
+                String(b.track).toLowerCase()
+                ? -1
+                : 1;
+            default:
+              return 1;
+          }
+        });
         break;
       case "Artist Songs":
         uiList = spotifyLibrary.filter(
-          item => item.artist == this.state.currentArtist
+          item => item.artist === this.state.currentArtist
         );
         break;
     }
-    if (this.state.currentView != "Artists") {
+    if (this.state.currentView === "Songs") {
       sortBy = (
         <div
           style={{
@@ -113,9 +114,6 @@ class SpotifyLibrary extends Component {
             }}
           >
             X
-            {this.state.currentView === "Artist Songs"
-              ? `> ${this.state.currentArtist}`
-              : null}
           </h2>
           <div
             style={{
@@ -132,12 +130,11 @@ class SpotifyLibrary extends Component {
               marginRight: "20px",
               textTransform: "uppercase",
               fontWeight: "bold",
-              color: this.state.listBy === "Artist" ? "#ff5e54" : "#ffffff"
+              color: this.state.sortBy === "Song" ? "#ff5e54" : "#ffffff"
             }}
             onClick={() => {
               this.setState({
-                listBy: "Artist",
-                currentView: "Artists"
+                sortBy: "Song"
               });
             }}
           >
@@ -148,12 +145,11 @@ class SpotifyLibrary extends Component {
               marginRight: "20px",
               textTransform: "uppercase",
               fontWeight: "bold",
-              color: this.state.listBy === "Song" ? "#ff5e54" : "#ffffff"
+              color: this.state.sortBy === "Artist" ? "#ff5e54" : "#ffffff"
             }}
             onClick={() => {
               this.setState({
-                listBy: "Song",
-                currentView: "Songs"
+                sortBy: "Artist"
               });
             }}
           >
@@ -164,12 +160,11 @@ class SpotifyLibrary extends Component {
               marginRight: "20px",
               textTransform: "uppercase",
               fontWeight: "bold",
-              color: this.state.listBy === "Song" ? "#ff5e54" : "#ffffff"
+              color: this.state.sortBy === "Date" ? "#ff5e54" : "#ffffff"
             }}
             onClick={() => {
               this.setState({
-                listBy: "Song",
-                currentView: "Songs"
+                sortBy: "Date"
               });
             }}
           >
@@ -203,7 +198,7 @@ class SpotifyLibrary extends Component {
     }
     const libraryListUI = uiList.map((item, index) => (
       <div
-        className="item"
+        className="item redclick"
         style={{
           padding: "12px 0px 12px 0px"
         }}
@@ -217,7 +212,7 @@ class SpotifyLibrary extends Component {
               });
               break;
             default:
-              this.playSong(item.uri, index);
+              this.playSong(item.uri);
           }
         }}
       >

@@ -7,6 +7,10 @@ div.first {
   width: 33%;
 }
 
+div.first:active {
+  color: #ff5e54;
+}
+
 div.second {
   color: #808080;
   width: 33%;
