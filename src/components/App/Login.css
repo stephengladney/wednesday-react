@@ -1,0 +1,25 @@
+div.loginContainer {
+  position: absolute;
+  width: 100%;
+  top: 20%;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+}
+
+img.wednesday {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+}
+
+h1 {
+  color: #ffffff;
+}
+
+.helper {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}

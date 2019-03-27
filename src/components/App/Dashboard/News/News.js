@@ -7,52 +7,74 @@ class News extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      chosen: "option2"
+      content: "Headlines"
     };
   }
   render() {
-    var wat;
-    if (this.state.chosen === "option1") wat = "option wun";
-    if (this.state.chosen === "option2") wat = "option too";
-    if (this.state.chosen === "option3") wat = "option tree";
+    var content;
+    switch (this.state.content) {
+      case "Entertainment":
+        content = <h2 className="subtitle">Entertainment News</h2>;
+        break;
+      case "Sports":
+        content = <h2 className="subtitle">Sports News</h2>;
+        break;
+      case "Science":
+        content = <h2 className="subtitle">Science News</h2>;
+        break;
+      case "Tech":
+        content = <h2 className="subtitle">Tech News</h2>;
+        break;
+      case "Search":
+        content = <h2 className="subtitle">Search</h2>;
+        break;
+      default:
+        content = <h2 className="subtitle">Headlines</h2>;
+    }
     return (
       <div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center"
-          }}
-        >
-          <h1 className="title">news</h1>
-          <div
-            className="newsApiWatermark"
-            style={{
-              margin: "13px 100px 0px 0px"
-            }}
-          >
-            Powered by <a href="https://newsapi.org">NewsAPI.org</a>
-          </div>
+        <h1 className="title">news</h1>
+        <div className="content">
+          <Selector>
+            <SelectorOption
+              value="Headlines"
+              selected={this.state.content}
+              func={() => this.setState({ content: "Headlines" })}
+              total={6}
+            />
+            <SelectorOption
+              value="Entertainment"
+              selected={this.state.content}
+              func={() => this.setState({ content: "Entertainment" })}
+              total={6}
+            />
+            <SelectorOption
+              value="Sports"
+              selected={this.state.content}
+              func={() => this.setState({ content: "Sports" })}
+              total={6}
+            />
+            <SelectorOption
+              value="Science"
+              selected={this.state.content}
+              func={() => this.setState({ content: "Science" })}
+              total={6}
+            />
+            <SelectorOption
+              value="Tech"
+              selected={this.state.content}
+              func={() => this.setState({ content: "Tech" })}
+              total={6}
+            />
+            <SelectorOption
+              value="Search"
+              selected={this.state.content}
+              func={() => this.setState({ content: "Search" })}
+              total={6}
+            />
+          </Selector>
+          {content}
         </div>
-        <Selector>
-          <SelectorOption
-            value="option1"
-            selected={this.state.chosen}
-            func={() => this.setState({ chosen: "option1" })}
-          />
-          <SelectorOption
-            value="option2"
-            selected={this.state.chosen}
-            func={() => this.setState({ chosen: "option2" })}
-          />
-          <SelectorOption
-            value="option3"
-            selected={this.state.chosen}
-            func={() => this.setState({ chosen: "option3" })}
-          />
-        </Selector>
-        {wat}
       </div>
     );
   }

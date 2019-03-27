@@ -2,7 +2,7 @@ div.weatherFutureDay {
   /* border-style: solid;
   border-width: 1px;
   border-color: white; */
-  padding: 10px;
+  padding: 0px 10px 0px 10px;
   text-align: center;
   width: 160px;
 }
