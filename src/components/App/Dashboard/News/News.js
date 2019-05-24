@@ -11,26 +11,7 @@ class News extends Component {
     };
   }
   render() {
-    var content;
-    switch (this.state.content) {
-      case "Entertainment":
-        content = <h2 className="subtitle">Entertainment News</h2>;
-        break;
-      case "Sports":
-        content = <h2 className="subtitle">Sports News</h2>;
-        break;
-      case "Science":
-        content = <h2 className="subtitle">Science News</h2>;
-        break;
-      case "Tech":
-        content = <h2 className="subtitle">Tech News</h2>;
-        break;
-      case "Search":
-        content = <h2 className="subtitle">Search</h2>;
-        break;
-      default:
-        content = <h2 className="subtitle">Headlines</h2>;
-    }
+    const content = <h2 className="subtitle">{this.state.content}</h2>;
     return (
       <div>
         <h1 className="title">news</h1>
