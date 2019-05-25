@@ -63,7 +63,7 @@ class Login extends Component {
                 <div class="field">
                   <div class="ui checkbox">
                     {checkbox}
-                    <label>Remember me</label>
+                    <label onClick={this.toggleRemember}>Remember me</label>
                   </div>
                 </div>
                 <button
