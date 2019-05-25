@@ -7,7 +7,7 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rememberMe: false
+      rememberMe: true
     };
     this.toggleRemember = this.toggleRemember.bind(this);
     this.authorizeMe = props.authorizeMe;
